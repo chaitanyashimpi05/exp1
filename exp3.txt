@@ -1,0 +1,49 @@
+Experiment No. 3
+Title:
+Conduct a Phishing Attack Simulation using Social Engineering Toolkit (SET) on Kali Linux
+Objective:
+To understand social engineering techniques by simulating a phishing attack in a controlled
+lab environment using the Social Engineering Toolkit (SET) in Kali Linux.
+Software/Tools Required:
+- Kali Linux
+- Terminal
+- Social Engineering Toolkit (SET) (pre-installed in Kali Linux)
+- Test browser/system (victim simulation) in an isolated network environment
+Theory:
+Phishing is a social engineering attack where attackers trick users into revealing
+confidential information (such as usernames, passwords, or financial data) by posing as a
+trusted entity, often via fake websites or emails.
+Social Engineering Toolkit (SET) is a framework in Kali Linux designed for penetration
+testing and simulating social engineering attacks for educational purposes.
+Types of Phishing Simulations in SET:
+- Website Cloner: Duplicates a real login page to capture credentials.
+- Credential Harvester: Captures usernames and passwords entered on a phishing page.
+- Email Phishing: Sends a crafted phishing email with malicious links.
+Procedure:
+1. Update Kali Linux:
+sudo apt update &amp;&amp; sudo apt upgrade -y
+2. Launch Social Engineering Toolkit:
+sudo setoolkit
+Accept the terms.
+3. Choose Social-Engineering Attacks:
+1) Social-Engineering Attacks
+4. Select Website Attack Vectors:
+2) Website Attack Vectors
+
+5. Choose Credential Harvester Attack Method:
+3) Credential Harvester Attack Method
+6. Select Site Cloner:
+2) Site Cloner
+7. Enter Your IP Address (attacker machine’s IP) for hosting the phishing page.
+8. Enter URL to Clone (example: http://example.com)
+9. Access from Victim Machine: Open http://&lt;attacker_IP&gt; and enter dummy
+credentials.
+Outcome:
+By the end of this experiment, students will:
+- Understand how phishing websites are created and hosted in a lab.
+- Learn credential harvesting techniques in a safe environment.
+- Recognize indicators of phishing attacks.
+Conclusion:
+This experiment demonstrated the creation of a phishing page using SET in Kali Linux and
+how credentials can be harvested. It reinforced the importance of security awareness, URL
+verification, and multi-factor authentication to prevent such attacks.

@@ -1,0 +1,92 @@
+Experiment No. 2
+Title:
+Use a Password Strength Tester to Evaluate the Strength of Various Passwords
+
+Objective:
+To understand the importance of strong passwords and evaluate different types of passwords
+using tools like cracklib-check, pwscore, and zxcvbn on Kali Linux.
+
+Software/Tools Required:
+ Kali Linux
+ Terminal
+ Tools: cracklib-runtime, libpam-pwquality, zxcvbn (Node.js)
+
+Theory:
+What is Password Strength?
+Password strength is a measure of how resistant a password is to guessing and brute-force
+attacks. Strong passwords are:
+ At least 12–16 characters long
+ Contain a mix of uppercase, lowercase, numbers, and special characters
+ Avoid common words, names, or predictable patterns
+ Not reused from other accounts
+
+Common Password Evaluation Tools in Kali Linux:
+Tool/Command Description
+cracklib-check Checks passwords against a dictionary and known patterns
+pwscore Rates password strength on a scale from 0 to 100
+zxcvbn Advanced strength estimator with time-to-crack estimation
+john (John the Ripper) Cracking simulator tool, tests password resilience
+
+Installation Commands:
+
+sudo apt update
+sudo apt install libcrack2 cracklib-runtime libpam-pwquality nodejs npm
+npm install -g zxcvbn
+
+Procedure:
+1. Using cracklib-check:
+echo &quot;Password123&quot; | cracklib-check
+Output:
+Password123: it is based on a dictionary word
+
+2. Using pwscore:
+echo &quot;D3f!AnT#92&quot; | pwscore
+Output:
+A numeric score out of 100.
+
+3. Using zxcvbn:
+zxcvbn &quot;Welcome@2025&quot;
+npm install -g zxcvbn
+nano testpass.js
+paste;
+const zxcvbn = require('zxcvbn');
+const password = process.argv[2];
+
+if (!password) {
+    console.log("Usage: node testpass.js <password>");
+    process.exit(1);
+}
+
+const result = zxcvbn(password);
+console.log(result);
+
+(CTRL + O, ENTER, CTRL + X)
+
+node testpass.js "Welcome@2025"
+
+
+
+Output:
+Shows password score (0–4), estimated crack time, and feedback.
+
+Sample Passwords and Evaluation:
+Password Tool Used Strength Score Comments
+123456 cracklib/pwscore Very Weak (5) Common, predictable
+password cracklib/zxcvbn Very Weak (0) Dictionary word
+Password123 zxcvbn Weak (1) Simple pattern
+Pa$$w0rd2025! pwscore Moderate (45) Decent mix, still somewhat predictable
+Zx!7@qP#v9D3 zxcvbn Very Strong (4) Long, complex, high entropy
+iloveyou cracklib Very Weak Common phrase
+
+Outcome:
+By the end of this experiment, students will be able to:
+
+ Identify characteristics of weak vs strong passwords
+ Evaluate password strength using multiple tools
+ Understand time-to-crack estimates and dictionary-based weakness
+ Apply secure password practices in real-world scenarios
+
+Conclusion:
+This experiment helped students understand the importance of strong passwords and
+demonstrated how different tools can analyze and rate password security, helping in
+developing better security hygiene.
