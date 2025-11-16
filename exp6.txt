@@ -1,0 +1,81 @@
+Computer systems store user passwords in a special file called the shadow file (/etc/shadow).
+To protect users, passwords are not saved in plain text. Instead, they are converted into a scrambled form called a hash using cryptographic hashing algorithms like:
+
+MD5 → $1$
+
+SHA-256 → $5$
+
+SHA-512 → $6$
+
+yescrypt → $y$ (used in newer Linux systems)
+
+Hashing is one-way, meaning the original password cannot be directly recovered.
+
+To check the strength of passwords and to perform security auditing, tools like John the Ripper (JtR) are used.
+John the Ripper is an open-source password-cracking tool. It works by:
+
+Reading password hashes from files like /etc/shadow.
+
+Applying different attacks such as:
+
+Dictionary Attack — tries passwords from a wordlist (like rockyou.txt).
+
+Brute Force Attack — tries all possible combinations.
+
+Rule-based Attack — modifies dictionary words (adding numbers, symbols).
+
+Comparing generated hashes to the actual hash in the shadow file.
+
+If the hashes match, the password is “cracked.”
+
+This experiment helps understand:
+
+How Linux stores passwords.
+
+How weak passwords can be cracked easily.
+
+Why strong hashing algorithms and strong passwords are necessary.
+
+Why system administrators must use secure hashing methods and strong password policies to protect user accounts.
+
+📘 CONCLUSION (Simple & Easy Language)
+
+In this practical, we learned how Linux saves password hashes securely in the /etc/shadow file and how these hashes can be analyzed using John the Ripper.
+By performing password cracking using a wordlist, we observed that:
+
+Weak or common passwords can be cracked easily.
+
+Strong passwords are difficult or impossible to crack using simple attacks.
+
+Modern hashing methods like yescrypt ($y$) are highly secure and John may not crack them easily.
+
+The experiment shows the importance of choosing long, complex, and unique passwords to protect accounts.
+
+It also highlights why system administrators must implement secure hashing algorithms and enforce strong password policies.
+
+Thus, the practical successfully demonstrated password security concepts, the working of John the Ripper, and the importance of having strong passwords to protect systems.
+npm install zxcvbn
+
+step 1: john
+
+step 2: sudo adduser user1
+sudo adduser user2
+
+step 3: sudo cp /etc/shadow ~/shadow1
+sudo chmod 644 ~/shadow1
+
+step 4: cat shadow1
+
+step 5: sudo john --wordlist=/home/kali/wordlist.txt shadow1
+
+u have to download this
+
+https://github.com/berzerk0/Probable-Wordlists/blob/master/Real-Passwords/Top12Thousand-probable-v2.txt
+
+and rename as wordlist.txt
+
+cheshire
+
+catarina
+
+step 6: john --show shadow1
