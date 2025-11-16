@@ -1,0 +1,103 @@
+Experiment No. 8
+Title:
+Set up a simple web server and perform a basic SQL injection attack.
+Objective:
+To understand how SQL injection works by setting up a simple web server and database, and
+to observe how improper input handling can allow unauthorized access, highlighting the
+importance of secure coding practices in web applications.
+
+Software/Tools Required:
+ Windows/ kali
+ VS Code or CMD
+
+Theory:
+SQL injection is a web security vulnerability where attackers manipulate input
+fields to execute unauthorized SQL commands on a database. It occurs when user
+inputs are directly embedded into queries without validation. Preventing it requires
+input sanitization, prepared statements, and parameterized queries to protect
+sensitive data and application integrity.
+
+Installation Commands:
+Step 1: Set up your environment
+Make sure you have Python 3, SQLite, and Flask installed.
+pip install flask
+Create a new folder for your project, e.g., sql_injection_demo.
+Step 2: Create a sample database
+Inside your folder, create a file setup_db.py:
+
+import sqlite3
+conn = sqlite3.connect(&#39;test.db&#39;)
+c = conn.cursor()
+c.execute(&#39;&#39;&#39;
+CREATE TABLE users (
+id INTEGER PRIMARY KEY,
+username TEXT,
+password TEXT
+)
+&#39;&#39;&#39;)
+# Add sample data
+c.execute(&quot;INSERT INTO users (username, password) VALUES (&#39;admin&#39;,
+&#39;admin123&#39;)&quot;)
+c.execute(&quot;INSERT INTO users (username, password) VALUES (&#39;user&#39;,
+&#39;user123&#39;)&quot;)
+conn.commit()
+conn.close()
+print(&quot;Database setup complete!&quot;)
+Run it:
+python setup_db.py
+Step 3: Create a simple Flask web app
+Create a file app.py:
+from flask import Flask, request
+import sqlite3
+app = Flask(__name__)
+
+@app.route(&#39;/&#39;)
+def home():
+return &#39;&#39;&#39;
+&lt;h1&gt;Login&lt;/h1&gt;
+&lt;form method=&quot;POST&quot; action=&quot;/login&quot;&gt;
+Username: &lt;input name=&quot;username&quot;&gt;&lt;br&gt;
+Password: &lt;input name=&quot;password&quot;&gt;&lt;br&gt;
+&lt;input type=&quot;submit&quot;&gt;
+&lt;/form&gt;
+&#39;&#39;&#39;
+@app.route(&#39;/login&#39;, methods=[&#39;POST&#39;])
+def login():
+username = request.form[&#39;username&#39;]
+password = request.form[&#39;password&#39;]
+# WARNING: vulnerable to SQL injection
+conn = sqlite3.connect(&#39;test.db&#39;)
+c = conn.cursor()
+query = f&quot;SELECT * FROM users WHERE username=&#39;{username}&#39; AND
+password=&#39;{password}&#39;&quot;
+c.execute(query)
+result = c.fetchone()
+conn.close()
+if result:
+return f&quot;&lt;h2&gt;Welcome {username}!&lt;/h2&gt;&quot;
+
+else:
+return &quot;&lt;h2&gt;Login Failed!&lt;/h2&gt;&quot;
+if __name__ == &quot;__main__&quot;:
+app.run(debug=True)
+Step 4: Run the web server
+python app.py
+Open browser and go to http://127.0.0.1:5000/.
+Step 5: Perform a basic SQL injection
+In the login page, try these inputs:
+Username: &#39; OR &#39;1&#39;=&#39;1
+Password: &#39; OR &#39;1&#39;=&#39;1
+This will bypass login because the SQL becomes:
+SELECT * FROM users WHERE username=&#39;&#39; OR &#39;1&#39;=&#39;1&#39; AND password=&#39;&#39; OR
+&#39;1&#39;=&#39;1&#39;
+✅ You should see a “Welcome” message even without correct credentials.
+Note: Any other normal credentials will display login failed!
+Outcome:
+Successfully demonstrated a basic SQL injection attack in a controlled environment. Login
+was bypassed using crafted inputs, showing how malicious users can exploit vulnerable code,
+emphasizing the risks of directly embedding user inputs into SQL queries.
+Conclusion:
+SQL injection is a serious security vulnerability that can compromise data. Using
+parameterized queries, input validation, and secure coding practices prevents such attacks.
+Hands-on practice reinforces understanding of web security principles and the need to always
+validate and sanitize user inputs.
